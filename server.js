@@ -12,11 +12,11 @@ app.post('/api/chat', async (req, res) => {
 
   try {
     // Kirim pesan ke Gemini API
-    const response = await fetch('https://api.gemini.com/v1/chat', { // Ganti dengan URL API Gemini yang benar
+    const response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-latest:generateContent?key=AIzaSyB_CHyuw8J9sYWDboOd1_F5Dg7d1HUa7nc', { // Ganti dengan URL API Gemini yang benar
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': 'Bearer YOUR_API_KEY' // Ganti dengan API Key Gemini
+        'Authorization': 'AIzaSyB_CHyuw8J9sYWDboOd1_F5Dg7d1HUa7nc' // Ganti dengan API Key Gemini
       },
       body: JSON.stringify({
         text: message,
