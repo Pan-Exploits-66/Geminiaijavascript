@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Chat dengan Gemini AI</title>
+  <style>
+    /* Tambahkan CSS untuk styling di sini */
+    body {
+      font-family: sans-serif;
+    }
+    #chatbox {
+      width: 400px;
+      height: 300px;
+      border: 1px solid #ccc;
+      overflow-y: scroll;
+      padding: 10px;
+    }
+    .message {
+      margin-bottom: 10px;
+      padding: 5px;
+      border-radius: 5px;
+    }
+    .user {
+      background-color: #eee;
+      text-align: right;
+    }
+    .ai {
+      background-color: #ccf;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Chat dengan Gemini AI</h1>
+
+  <div id="chatbox"></div>
+
+  <input type="text" id="messageInput" placeholder="Ketik pesan...">
+  <button onclick="sendMessage()">Kirim</button>
+
+  <script>
+    function sendMessage() {
+      var message = document.getElementById("messageInput").value;
+      displayMessage(message, "user");
+      document.getElementById("messageInput").value = "";
+
+      // Kirim pesan ke Gemini API
+      fetch('https://api.gemini.com/v1/chat', { // Ganti dengan URL API Gemini yang benar
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer YOUR_API_KEY' // Ganti dengan API Key Gemini
+        },
+        body: JSON.stringify({ 
+          text: message, 
+          // Tambahkan parameter lain sesuai kebutuhan API
+        })
+      })
+      .then(response => response.json())
+      .then(data => {
+        // Asumsikan respon API memiliki struktur { response: "teks respon" }
+        displayMessage(data.response, "ai"); 
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        displayMessage("Terjadi kesalahan.", "ai");
+      });
+    }
+
+    function displayMessage(message, sender) {
+      var chatbox = document.getElementById("chatbox");
+      var messageElement = document.createElement("div");
+      messageElement.classList.add("message", sender);
+      messageElement.textContent = message;
+      chatbox.appendChild(messageElement);
+      chatbox.scrollTop = chatbox.scrollHeight;
+    }
+  </script>
+
+</body>
+</html>
